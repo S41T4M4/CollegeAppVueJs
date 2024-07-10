@@ -8,7 +8,6 @@ const http = axios.create({
 });
 
 const SiadService = {
- 
   getTurmas() {
     return http.get('/turmas');
   },
@@ -21,8 +20,6 @@ const SiadService = {
   deleteTurma(turma_id) {
     return http.delete(`/turmas/${turma_id}`);
   },
-
- 
   getAlunos() {
     return http.get('/alunos');
   },
@@ -35,30 +32,29 @@ const SiadService = {
   deleteAluno(aluno_id) {
     return http.delete(`/alunos/${aluno_id}`);
   },
-
-
+  getAlunoById(aluno_id) {
+    return http.get(`/alunos/${aluno_id}`);
+  },
   getDisciplinas() {
     return http.get('/disciplinas');
   },
   addDisciplina(disciplina) {
-  return http.post('/disciplinas', disciplina)
-    .then(response => {
-      console.log('Disciplina adicionada com sucesso:', response.data);
-      return response.data;  
-    })
-    .catch(error => {
-      console.error('Erro ao adicionar disciplina:', error);
-      throw error;  
-    });
-},
-
+    return http.post('/disciplinas', disciplina)
+      .then(response => {
+        console.log('Disciplina adicionada com sucesso:', response.data);
+        return response.data;  
+      })
+      .catch(error => {
+        console.error('Erro ao adicionar disciplina:', error);
+        throw error;  
+      });
+  },
   updateDisciplina(disciplina_id, disciplina) {
     return http.put(`/disciplinas/${disciplina_id}`, disciplina);
   },
   deleteDisciplina(disciplina_id) {
     return http.delete(`/disciplinas/${disciplina_id}`);
   },
-
   getNotas() {
     return http.get('/notas');
   },
@@ -71,12 +67,35 @@ const SiadService = {
   deleteNota(nota_id) {
     return http.delete(`/notas/${nota_id}`);
   },
-
-
+  calcularMediaNotasAluno(alunoId) {
+    return http.get(`/alunos/${alunoId}/media-notas`)
+      .then(response => {
+        return response.data; 
+      })
+      .catch(error => {
+        console.error('Erro ao calcular média das notas do aluno:', error);
+        throw error;
+      });
+  },
+  getNotasByAluno(aluno_id) {
+    return http.get(`/alunos/${aluno_id}/notas`);
+  },
+  getMediaNotasByAluno(aluno_id) {
+    return http.get(`/alunos/${aluno_id}/media`);
+  },
   getTurmasAlunosDisciplinasNotas() {
     return http.get('/turmas-alunos-disciplinas-notas');
+  },
+    downloadMediaNotasCSV() {
+    return http.get('/alunos/media-notas-csv', { responseType: 'blob' })
+      .then(response => {
+        return response.data;
+      })
+      .catch(error => {
+        console.error('Erro ao baixar o arquivo CSV:', error);
+        throw error;
+      });
   }
 };
 
 export default SiadService;
-
