@@ -1,8 +1,11 @@
 <template>
   <div class="content-main">
+  <div class="logo">
+ 
+  </div>
     <div class="describer-content">
       <h2>
-      <strong>SIAD<br>
+      <strong><br>
       Sistema de Informação de Avaliação de Desempenho</strong>
       </h2>
     </div>
@@ -28,5 +31,8 @@ export default {
 .credits{
   text-align:right;
   margin-top: 30rem;
+}
+.logo-img{
+  height: 40px;
 }
 </style>

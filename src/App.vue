@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <header>
-  
-      <button @click="toggleMenu">☰ Menu</button>
+    <header class="header" id="myHeader">  
+      <button @click="toggleMenu">☰</button>
+       <button id="home-button">
+      <router-link to="/" id="nerd-face1">🤓</router-link>
+      </button>
     </header>
-
     <aside :class="{ open: isMenuOpen }">
       <nav>
         <button @click="toggleMenu" class="close-btn">✕</button>
         <ul>
-          <li id = "nerd-face">🤓</li>
           <li><router-link to="/cadastro-aluno">Cadastro do Aluno</router-link></li>
           <li><router-link to="/cadastro-turma">Cadastro da Turma</router-link></li>
           <li><router-link to="/cadastro-disciplina">Cadastro da Disciplina</router-link></li>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+
 import router from './router';
 
 export default {
@@ -42,6 +43,8 @@ export default {
     }
   }
 };
+
+
 </script>
 
 <style>
@@ -57,6 +60,7 @@ header {
   color: white;
   padding: 1rem;
   text-align: left;
+
 }
 
 header button {
@@ -73,7 +77,7 @@ aside {
   left: 0;
   height: 100%;
   width: 250px;
-  background-color: #333;
+  background-color: #000000;
   color: white;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
@@ -104,7 +108,6 @@ aside nav ul {
   padding: 0;
   margin: 0;
 }
-
 aside nav ul li {
   padding: 1rem;
   border-bottom: 1px solid #444;
@@ -114,7 +117,6 @@ aside nav ul li a {
   color: white;
   text-decoration: none;
 }
-
 main {
   margin-left: 0;
   padding: 2rem;
@@ -127,4 +129,22 @@ aside.open + main {
  font-size: 24px;
  text-align: center;
 }
+.header{
+  background-color: #000000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  z-index: 200;
+  height:60px;
+}
+#home-button{
+ position:absolute;
+ left : 50%;
+ background-color: #000000;
+}
+#nerd-face1{
+  color:#000000;
+}
+
 </style>

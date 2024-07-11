@@ -1,10 +1,7 @@
 <template>
   <div>
     <h2>Média das Notas dos Alunos</h2>
-
-
     <button @click="downloadCSV" class="download-btn">Baixar CSV</button>
-
     <table>
       <thead>
         <tr>
@@ -56,7 +53,8 @@ export default {
                     return {
                       ...aluno,
                       media: mediaResponse.data,
-                      turma_nome: turmaDoAluno ? turmaDoAluno.nome : 'N/A'
+                      turma_nome: turmaDoAluno ? turmaDoAluno.nome : 'N/A',
+              
                     };
                   });
               })
