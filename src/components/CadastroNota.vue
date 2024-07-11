@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- Tabela de Disciplinas -->
-    <h2>Disciplinas Cadastradas</h2>
+   
+    <h2 id="tittle-1">Disciplinas Cadastradas</h2>
     <q-table
       class="q-table"
       :rows="disciplinas"
@@ -18,8 +18,8 @@
       </template>
     </q-table>
 
-    <!-- Tabela de Alunos -->
-    <h2>Alunos Cadastrados</h2>
+    
+    <h2 id="tittle-2">Alunos Cadastrados</h2>
     <q-table
       class="q-table"
       :rows="alunos"
@@ -36,8 +36,8 @@
       </template>
     </q-table>
 
-    <!-- Formulário de Cadastro de Notas -->
-    <h2>Cadastro de Notas</h2>
+   
+    <h2 id="tittle-3">Cadastro de Notas</h2>
     <q-form @submit="submitForm" class="q-gutter-md">
       <q-input v-model="nota.aluno_id" label="ID do Aluno" filled lazy-rules :rules="[val => !!val || 'ID do Aluno é obrigatório']"></q-input>
       <q-input v-model="nota.disciplina_id" label="ID da Disciplina" filled lazy-rules :rules="[val => !!val || 'ID da Disciplina é obrigatório']"></q-input>
@@ -45,8 +45,8 @@
       <q-btn type="submit" :label="modoEdicao ? 'Salvar Nota' : 'Adicionar Nota'" :color="modoEdicao ? 'green' : 'primary'" />
     </q-form>
 
-    <!-- Tabela de Notas Cadastradas -->
-    <h2>Notas Cadastradas</h2>
+
+    <h2 id="tittle-4">Notas Cadastradas</h2>
     <q-table
       class="q-table"
       :rows="notas"
@@ -182,5 +182,16 @@ export default {
 </script>
 
 <style scoped>
-
+#tittle-1{
+    font-family: serif;
+}
+#tittle-2{
+    font-family: serif;
+}
+#tittle-3{
+    font-family: serif;
+}
+#tittle-4{
+    font-family: serif;
+}
 </style>

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h2>Cadastro da Turma</h2>
+    <h2 id="tittle">Class Registration</h2>
     <q-form @submit="adicionarTurma" class="q-gutter-md">
       <q-input v-model="nome" label="Nome da Turma" filled lazy-rules :rules="[val => !!val || 'Nome da Turma é obrigatório']"></q-input>
       <q-btn type="submit" label="Adicionar Turma" color="primary" />
     </q-form>
 
     
-    <h2>Turmas Cadastradas</h2>
+    <h2 id = "tittle-2">Registered Classes</h2>
     <q-table
       class="q-table"
       :rows="turmas"
@@ -107,18 +107,25 @@ export default {
       turma.nome_editado = turma.nome;
     },
     excluirTurma(turmaId) {
+      if (confirm("Are u sure about that ?")) {
       SiadService.deleteTurma(turmaId)
         .then(() => {
           this.carregarTurmas();
         })
-        .catch(error => {
-          console.error('Erro ao excluir turma:', error);
+        .catch(() => {
+          window.alert('Não é possivel excluir uma turma com alunos !');
         });
+      }
     }
   }
 };
 </script>
 
 <style scoped>
-
+#tittle{
+    font-family: serif;
+}
+#tittle-2{
+    font-family: serif;
+}
 </style>

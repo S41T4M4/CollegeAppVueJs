@@ -86,8 +86,8 @@ const SiadService = {
   getTurmasAlunosDisciplinasNotas() {
     return http.get('/turmas-alunos-disciplinas-notas');
   },
-    downloadMediaNotasCSV() {
-    return http.get('/alunos/media-notas-csv', { responseType: 'blob' })
+  downloadMediaNotasCSV() {
+    return http.get('/download-alunos-notas-csv', { responseType: 'blob' })
       .then(response => {
         return response.data;
       })

@@ -117,8 +117,8 @@ export default {
         .then(() => {
           this.carregarDisciplinas();
         })
-        .catch(error => {
-          console.error('Erro ao excluir disciplina:', error);
+        .catch(() => {
+          window.alert('Erro ao excluir disciplina pois possui notas de alunos cadastrados nessas disciplinas');
         });
     }
   }

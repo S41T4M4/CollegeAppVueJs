@@ -2,26 +2,26 @@
   <div>
     <h2>Média das Notas dos Alunos</h2>
 
-    <!-- Botão de Download CSV -->
+
     <button @click="downloadCSV" class="download-btn">Baixar CSV</button>
 
     <table>
       <thead>
         <tr>
-          <th>Turma</th>
-          <th>ID do Aluno</th>
-          <th>Nome do Aluno</th>
-          <th>Média das Notas</th>
-          <th>Status</th>
+          <th class="turma">Turma</th>
+          <th class="idAluno">ID do Aluno</th>
+          <th class="nomeAluno">Nome do Aluno</th>
+          <th class="mediaNotas">Média das Notas</th>
+          <th class="status">Status</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="aluno in alunos" :key="aluno.aluno_id">
-          <td>{{ aluno.turma_nome }}</td>
-          <td>{{ aluno.aluno_id }}</td>
-          <td>{{ aluno.nome }}</td>
-          <td>{{ aluno.media.toFixed(2) }}</td>
-          <td>{{ aluno.media >= 6 ? 'Aprovado' : 'Reprovado' }}</td>
+          <td class="turma">{{ aluno.turma_nome }}</td>
+          <td class="idAluno">{{ aluno.aluno_id }}</td>
+          <td class="nomeAluno">{{ aluno.nome }}</td>
+          <td class="mediaNotas">{{ aluno.media.toFixed(2) }}</td>
+          <td class="status">{{ aluno.media >= 6 ? 'Aprovado' : 'Reprovado' }}</td>
         </tr>
       </tbody>
     </table>
@@ -79,21 +79,19 @@ export default {
           console.error('Erro ao buscar os alunos:', error);
         });
     },
-
     downloadCSV() {
       SiadService.downloadMediaNotasCSV()
-        .then(response => {
-          const url = window.URL.createObjectURL(new Blob([response.data]));
+        .then(blob => {
+          const url = window.URL.createObjectURL(new Blob([blob]));
           const link = document.createElement('a');
           link.href = url;
-          link.setAttribute('download', 'media_notas.csv');
+          link.setAttribute('download', 'Download_Alunos_Notas.csv');
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
         })
         .catch(error => {
-          console.error('Erro ao baixar o arquivo CSV:', error);
-          alert('Erro ao baixar o arquivo CSV. Verifique o console para mais detalhes.');
+          console.error('Erro ao baixar o CSV:', error);
         });
     }
   }
@@ -125,5 +123,20 @@ th {
 }
 .download-btn:hover {
   background-color: #0056b3;
+}
+.turma:hover{
+  background-color: #aed9f5;
+}
+.idAluno:hover{
+  background-color: #dcaef5;
+}
+.nomeAluno:hover{
+  background-color: #f5a9a9;
+}
+.mediaNotas:hover{
+background-color: rgb(251, 252, 186);
+}
+.status:hover{
+background-color: chartreuse;
 }
 </style>

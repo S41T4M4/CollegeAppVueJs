@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h2>Cadastro do Aluno</h2>
+    <h2 id = "tittle-1">Cadastro do Aluno</h2>
     <q-form @submit="aluno.id ? atualizarAluno() : adicionarAluno()" class="q-gutter-md">
       <q-input v-model="aluno.nome" label="Nome do Aluno" filled lazy-rules :rules="[val => !!val || 'Nome do Aluno é obrigatório']"></q-input>
       <q-input v-model="aluno.turma_id" label="ID da Turma" filled lazy-rules :rules="[val => !!val || 'ID da Turma é obrigatório']"></q-input>
       <q-btn type="submit" :label="aluno.id ? 'Salvar Alterações' : 'Adicionar Aluno'" color="primary" />
     </q-form>
 
-    <h2>Alunos Cadastrados</h2>
+    <h2 id = "tittle">Alunos Cadastrados</h2>
     <q-table
       class="q-table"
       :rows="alunos"
@@ -60,7 +60,7 @@ export default {
       aluno: {
         nome: '',
         turma_id: null,
-        id: null // Adicionei este campo para diferenciar entre adicionar e atualizar aluno
+        id: null 
       },
       alunos: [],
       columns: [
@@ -85,24 +85,24 @@ export default {
           }));
         })
         .catch(error => {
-          console.error('Erro ao carregar alunos:', error);
+          window.alert('Erro ao carregar alunos:', error);
         });
     },
     adicionarAluno() {
       if (!this.aluno.nome || !this.aluno.turma_id) {
-        console.error('Nome ou ID da Turma não foram preenchidos');
+        window.alert('Nome ou ID da Turma não foram preenchidos');
         return;
       }
 
       SiadService.addAluno(this.aluno)
         .then(() => {
-          console.log('Aluno adicionado com sucesso');
+          window.alert('Aluno adicionado com sucesso');
           this.aluno.nome = '';
           this.aluno.turma_id = null;
           this.carregarAlunos();
         })
         .catch(error => {
-          console.error('Erro ao adicionar aluno:', error);
+          window.alert('Erro ao adicionar aluno:', error);
         });
     },
     editarAluno(aluno) {
@@ -110,8 +110,9 @@ export default {
       this.aluno.id = aluno.aluno_id;
     },
     salvarEdicao(aluno) {
+       if (confirm("Do u really want do edit ?")){
       if (!aluno.nome_editado || !aluno.turma_id_editado) {
-        console.error('Nome ou ID da Turma editado não foram preenchidos');
+        window.alert('Nome ou ID da Turma editado não foram preenchidos');
         return;
       }
 
@@ -120,15 +121,16 @@ export default {
         turma_id: aluno.turma_id_editado
       })
         .then(() => {
-          console.log('Aluno atualizado com sucesso');
+          window.alert('Aluno atualizado com sucesso');
           aluno.editando = false;
           aluno.nome = aluno.nome_editado;
           aluno.turma_id = aluno.turma_id_editado;
           this.aluno.id = null;
         })
         .catch(error => {
-          console.error('Erro ao atualizar aluno:', error);
+          window.alert('Erro ao atualizar aluno:', error);
         });
+      }
     },
     cancelarEdicao(aluno) {
       aluno.editando = false;
@@ -137,19 +139,33 @@ export default {
       this.aluno.id = null;
     },
     excluirAluno(aluno_id) {
+      if (confirm("Do u really want do delete ?")){
       SiadService.deleteAluno(aluno_id)
         .then(() => {
-          console.log('Aluno excluído com sucesso');
           this.carregarAlunos();
         })
         .catch(error => {
           console.error('Erro ao excluir aluno:', error);
+        
         });
+      }
     }
   }
 };
 </script>
 
 <style scoped>
-/* Seu CSS aqui */
+.q-table{
+  background-color: rgb(255, 255, 255);
+
+}
+#tittle{
+  font-size: 40px;
+  font-family: serif;
+}
+#tittle-1{
+  font-size: 50px;
+  font-family: serif;
+}
+
 </style>

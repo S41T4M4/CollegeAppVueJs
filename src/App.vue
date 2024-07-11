@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-       
+  
       <button @click="toggleMenu">☰ Menu</button>
     </header>
 
@@ -9,6 +9,7 @@
       <nav>
         <button @click="toggleMenu" class="close-btn">✕</button>
         <ul>
+          <li id = "nerd-face">🤓</li>
           <li><router-link to="/cadastro-aluno">Cadastro do Aluno</router-link></li>
           <li><router-link to="/cadastro-turma">Cadastro da Turma</router-link></li>
           <li><router-link to="/cadastro-disciplina">Cadastro da Disciplina</router-link></li>
@@ -119,8 +120,11 @@ main {
   padding: 2rem;
   transition: margin-left 0.3s ease;
 }
-
 aside.open + main {
   margin-left: 250px;
+}
+#nerd-face{
+ font-size: 24px;
+ text-align: center;
 }
 </style>
