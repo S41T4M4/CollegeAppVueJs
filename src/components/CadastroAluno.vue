@@ -36,12 +36,12 @@
           </q-td>
           <q-td key="acoes" :props="props">
             <template v-if="!props.row.editando">
-              <q-btn @click="editarAluno(props.row)" label="Editar" color="primary" />
-              <q-btn @click="excluirAluno(props.row.aluno_id)" label="Excluir" color="negative" />
+               <q-btn id="editarAluno" @click="editarAluno(props.row)" class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></q-btn>
+              <q-btn id="excluirAluno" @click="excluirAluno(props.row.aluno_id)" class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></q-btn>
             </template>
             <template v-else>
-              <q-btn @click="salvarEdicao(props.row)" label="Salvar" color="green" />
-              <q-btn @click="cancelarEdicao(props.row)" label="Cancelar" color="negative" />
+              <q-btn id="salvarEdicao" @click="salvarEdicao(props.row)" class="waves-effect waves-light btn-small"><i class="material-icons left">save</i></q-btn>
+              <q-btn @click="cancelarEdicao(props.row)" label="❌" color="negative" />
             </template>
           </q-td>
         </q-tr>
@@ -96,10 +96,10 @@ export default {
 
       SiadService.addAluno(this.aluno)
         .then(() => {
-          window.alert('Aluno adicionado com sucesso');
+          console.log('Aluno adicionado com sucesso');
+          this.carregarAlunos();
           this.aluno.nome = '';
           this.aluno.turma_id = null;
-          this.carregarAlunos();
         })
         .catch(error => {
           window.alert('Erro ao adicionar aluno:', error);
@@ -143,10 +143,12 @@ export default {
       SiadService.deleteAluno(aluno_id)
         .then(() => {
           this.carregarAlunos();
+          if (this.carregarAlunos == false){
+            window.alert('Não foi possível excluir o aluno');
+          }
         })
-        .catch(error => {
-          console.error('Erro ao excluir aluno:', error);
-        
+        .catch(() => {
+          window.alert('O aluno possui notas cadastradas !');
         });
       }
     }
@@ -161,11 +163,21 @@ export default {
 }
 #tittle{
   font-size: 40px;
-  font-family: serif;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 #tittle-1{
-  font-size: 50px;
-  font-family: serif;
+font-size: 50px;
+ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+#excluirAluno{
+  background-color: rgb(255, 0, 0);
+}
+#editarAluno{
+  background-color: rgb(91, 140, 238);
+}
+#salvarEdicao{
+  background-color: rgb(99, 193, 99);
+}
+
 
 </style>

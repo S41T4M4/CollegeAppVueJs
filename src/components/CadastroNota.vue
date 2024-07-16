@@ -1,6 +1,17 @@
 <template>
   <div>
-   
+     <h2>
+      Ciências da Computação
+     </h2>
+     <h2 id="tittle-3">Cadastro de Notas</h2>
+    <q-form @submit="submitForm" class="q-gutter-md">
+      <q-input v-model="nota.aluno_id" label="ID do Aluno" filled lazy-rules :rules="[val => !!val || 'ID do Aluno é obrigatório']"></q-input>
+       
+      <q-input v-model="nota.disciplina_id" label="ID da Disciplina" filled lazy-rules :rules="[val => !!val || 'ID da Disciplina é obrigatório']"></q-input>
+      <q-input v-model="nota.nota" label="Nota" filled lazy-rules :rules="[val => !!val || 'Nota é obrigatória', val => val <= 10 || 'Nota não pode ser maior que 10', val => val > 0 || 'Nota não pode ser menor do que 0 ']" ></q-input>
+      <q-btn type="submit" :label="modoEdicao ? 'Salvar Nota' : 'Adicionar Nota'" :color="modoEdicao ? 'green' : 'primary'" />
+    </q-form>
+
     <h2 id="tittle-1">Disciplinas Cadastradas</h2>
     <q-table
       class="q-table"
@@ -36,16 +47,6 @@
       </template>
     </q-table>
 
-   
-    <h2 id="tittle-3">Cadastro de Notas</h2>
-    <q-form @submit="submitForm" class="q-gutter-md">
-      <q-input v-model="nota.aluno_id" label="ID do Aluno" filled lazy-rules :rules="[val => !!val || 'ID do Aluno é obrigatório']"></q-input>
-      <q-input v-model="nota.disciplina_id" label="ID da Disciplina" filled lazy-rules :rules="[val => !!val || 'ID da Disciplina é obrigatório']"></q-input>
-      <q-input v-model="nota.nota" label="Nota" filled lazy-rules :rules="[val => !!val || 'Nota é obrigatória']"></q-input>
-      <q-btn type="submit" :label="modoEdicao ? 'Salvar Nota' : 'Adicionar Nota'" :color="modoEdicao ? 'green' : 'primary'" />
-    </q-form>
-
-
     <h2 id="tittle-4">Notas Cadastradas</h2>
     <q-table
       class="q-table"
@@ -61,8 +62,8 @@
           <q-td key="disciplina_nome" :props="props">{{ getDisciplinaNome(props.row.disciplina_id) }}</q-td>
           <q-td key="nota" :props="props">{{ props.row.nota }}</q-td>
           <q-td key="acoes" :props="props">
-            <q-btn @click="editarNota(props.row)" label="Editar" color="primary" />
-            <q-btn @click="excluirNota(props.row.nota_id)" label="Excluir" color="negative" />
+          <q-btn @click="editarNota(props.row)" label="Editar" color="primary" />
+          <q-btn @click="excluirNota(props.row.nota_id)" label="Excluir" color="negative" />
           </q-td>
         </q-tr>
       </template>
@@ -106,6 +107,7 @@ export default {
     this.carregarDados();
   },
   methods: {
+
     carregarDados() {
       Promise.all([
         SiadService.getNotas(),
@@ -138,7 +140,7 @@ export default {
     },
     adicionarNota() {
       SiadService.addNota(this.nota)
-        .then(() => {
+        .then(() => {         
           this.limparFormulario();
           this.carregarDados();
         })
@@ -147,8 +149,10 @@ export default {
         });
     },
     editarNota(nota) {
+      
       this.nota = { ...nota };
       this.modoEdicao = true;
+      window.scrollTo(5, 5);
     },
     atualizarNota() {
       SiadService.updateNota(this.nota.nota_id, this.nota)
@@ -161,6 +165,7 @@ export default {
         });
     },
     excluirNota(nota_id) {
+      if (confirm("Are u sure about that ?")){
       SiadService.deleteNota(nota_id)
         .then(() => {
           this.carregarDados();
@@ -168,6 +173,7 @@ export default {
         .catch(error => {
           console.error('Erro ao excluir nota:', error);
         });
+      }
     },
     limparFormulario() {
       this.nota = {
@@ -183,15 +189,15 @@ export default {
 
 <style scoped>
 #tittle-1{
-    font-family: serif;
+ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 #tittle-2{
-    font-family: serif;
+ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 #tittle-3{
-    font-family: serif;
+ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 #tittle-4{
-    font-family: serif;
+ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 </style>

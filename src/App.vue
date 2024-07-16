@@ -1,24 +1,26 @@
 <template>
   <div id="app">
     <header class="header" id="myHeader">  
-      <button @click="toggleMenu">☰</button>
+      <button  id="toggleMenu" @click="menuLateral" >☰</button>
        <button id="home-button">
-      <router-link to="/" id="nerd-face1">🤓</router-link>
+      <router-link to="/" id="nerd-face1">S.I.A.D</router-link>
       </button>
     </header>
     <aside :class="{ open: isMenuOpen }">
       <nav>
         <button @click="toggleMenu" class="close-btn">✕</button>
-        <ul>
-          <li><router-link to="/cadastro-aluno">Cadastro do Aluno</router-link></li>
-          <li><router-link to="/cadastro-turma">Cadastro da Turma</router-link></li>
-          <li><router-link to="/cadastro-disciplina">Cadastro da Disciplina</router-link></li>
-          <li><router-link to="/cadastro-nota">Cadastro de Nota</router-link></li>
-          <li><router-link to="/situacao-aluno">Situação do Aluno</router-link></li>
+        <ul >
+          <li class="asideMenu"><router-link to="/cadastro-aluno">Cadastro do Aluno</router-link></li>
+          <li class="asideMenu"><router-link to="/cadastro-turma">Cadastro da Turma</router-link></li>
+          <li class="asideMenu"><router-link to="/cadastro-disciplina">Cadastro da Disciplina</router-link></li>
+          <li class="asideMenu"><router-link to="/cadastro-nota">Cadastro de Nota</router-link></li>
+          <li class="asideMenu"><router-link to="/situacao-aluno">Situação do Aluno</router-link></li>
+          
         </ul>
+        
       </nav>
+     
     </aside>
-
     <main>
       <router-view></router-view>
     </main>
@@ -38,9 +40,9 @@ export default {
     };
   },
   methods: {
-    toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-    }
+    menuLateral() {
+      this.isMenuOpen = !this.isMenuOpen
+    }  
   }
 };
 
@@ -50,7 +52,7 @@ export default {
 <style>
 
 body {
-  font-family: Arial, sans-serif;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
   margin: 0;
   padding: 0;
 }
@@ -71,6 +73,7 @@ header button {
   cursor: pointer;
 }
 
+
 aside {
   position: fixed;
   top: 0;
@@ -78,7 +81,7 @@ aside {
   height: 100%;
   width: 250px;
   background-color: #000000;
-  color: white;
+  color: rgb(255, 255, 255);
   transform: translateX(-100%);
   transition: transform 0.3s ease;
 }
@@ -144,7 +147,23 @@ aside.open + main {
  background-color: #000000;
 }
 #nerd-face1{
-  color:#000000;
+  color:#ffffff;
+  font-size: 28px;
+  position: absolute;
+  font-family: serif;
 }
+#nerd-face1:hover{
+  color:#8c8c8c;
+}
+#toggleMenu:hover{
+  color:#bcfffe;
+}
+.asideMenu{
 
+  font-size: 18px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+.asideMenu:hover{
+  font-style: italic;
+}
 </style>

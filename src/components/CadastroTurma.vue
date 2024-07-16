@@ -1,13 +1,12 @@
 <template>
   <div>
-    <h2 id="tittle">Class Registration</h2>
+    <h2 id="tittle">Cadastro Turma</h2>
     <q-form @submit="adicionarTurma" class="q-gutter-md">
       <q-input v-model="nome" label="Nome da Turma" filled lazy-rules :rules="[val => !!val || 'Nome da Turma é obrigatório']"></q-input>
       <q-btn type="submit" label="Adicionar Turma" color="primary" />
     </q-form>
 
-    
-    <h2 id = "tittle-2">Registered Classes</h2>
+    <h2 id="tittle-2">Turmas Registradas</h2>
     <q-table
       class="q-table"
       :rows="turmas"
@@ -17,7 +16,6 @@
       :rows-per-page-options="[]"
     >
       <template v-slot:top-right>
-
       </template>
       <template v-slot:body="props">
         <q-tr :props="props">
@@ -32,12 +30,12 @@
           </q-td>
           <q-td key="acoes" :props="props">
             <template v-if="!props.row.editando">
-              <q-btn @click="editarTurma(props.row)" label="Editar" color="primary" />
-              <q-btn @click="excluirTurma(props.row.turma_id)" label="Excluir" color="negative" />
+              <q-btn id="editarTurma" @click="editarTurma(props.row)" class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></q-btn>
+              <q-btn id="excluirTurma" @click="excluirTurma(props.row.turma_id)" class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></q-btn>
             </template>
             <template v-else>
-              <q-btn @click="salvarEdicao(props.row)" label="Salvar" color="green" />
-              <q-btn @click="cancelarEdicao(props.row)" label="Cancelar" color="negative" />
+              <q-btn id="salvarEdicao" @click="salvarEdicao(props.row)" class="waves-effect waves-light btn-small"><i class="material-icons left">save</i></q-btn>
+              <q-btn id="cancelarEdicao" @click="cancelarEdicao(props.row)" label="❌" color="negative" />
             </template>
           </q-td>
         </q-tr>
@@ -107,14 +105,16 @@ export default {
       turma.nome_editado = turma.nome;
     },
     excluirTurma(turmaId) {
-      if (confirm("Are u sure about that ?")) {
-      SiadService.deleteTurma(turmaId)
-        .then(() => {
-          this.carregarTurmas();
-        })
-        .catch(() => {
-          window.alert('Não é possivel excluir uma turma com alunos !');
-        });
+      if (confirm("Tem certeza que deseja excluir esta turma?")) {
+        SiadService.deleteTurma(turmaId)
+          .then(() => {
+            this.carregarTurmas();
+          })
+          .catch(error => {
+            if (error.response && error.response.data && error.response.data.message) {
+              alert("Não foi possivel excluir a turma, pois possui alunos cadastrados");
+            }
+          });
       }
     }
   }
@@ -122,10 +122,22 @@ export default {
 </script>
 
 <style scoped>
-#tittle{
-    font-family: serif;
+#tittle {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-#tittle-2{
-    font-family: serif;
+#tittle-2 {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#excluirTurma {
+  background-color: rgb(210, 81, 81);
+}
+#editarTurma {
+  background-color: rgb(22, 144, 244);
+}
+#salvarEdicao {
+  background-color: rgb(99, 193, 99);
+}
+#cancelarEdicao {
+  background-color: rgb(255, 0, 0);
 }
 </style>
